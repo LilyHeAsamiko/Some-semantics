@@ -1,0 +1,100 @@
+*Alternatively, higher order data can be classified with the QDA kernel, computing the log likelihood ratios:
+Criteria = (EEG_test - mean(EEG_G)T *(EEG_test - mean(EEG_G)/sigma_G + ln|sigma_G| + (EEG_test - mean(EEG_D)T *(EEG_test - mean(EEG_D)/sigma_D + ln|sigma_D|,
+And compare it with the threshold in the kernel. 
+
+%after feature selection (1:24), Crit: 0.1852, max dev:3.8415 BetweenSigma = [-1.8143, -2.1547; -2.1547; 1.8143];
+rng
+Mdlmix = fitcdiscr(zscore(X(~isnan(X(:,1)),:)),Y(~isnan(X(:,1))),...    %,repmat([{'interictal'};{'ictal'}],27,1),...
+    'OptimizeHyperparameters','auto',...
+    'HyperparameterOptimizationOptions',struct('Holdout',0.1,...
+    'AcquisitionFunctionName','expected-improvement-plus'))
+
+ans = 
+
+  struct with fields:
+
+     Type: 'twister'
+     Seed: 0
+    State: [625×1 uint32]
+
+|=====================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |        Delta |        Gamma |
+|      | result |             | runtime     | (observed)  | (estim.)    |              |              |
+|=====================================================================================================|
+|    1 | Best   |         0.5 |    0.032425 |         0.5 |         0.5 |     0.086169 |      0.84728 |
+|    2 | Accept |         0.5 |    0.022238 |         0.5 |         0.5 |       13.575 |        0.207 |
+|    3 | Accept |         0.5 |    0.023082 |         0.5 |         0.5 |   4.0936e-06 |      0.05785 |
+|    4 | Accept |         0.5 |    0.021899 |         0.5 |         0.5 |   1.5532e-05 |      0.55302 |
+|    5 | Accept |        0.75 |    0.021485 |         0.5 |        0.55 |   4.2177e-05 |      0.66994 |
+|    6 | Accept |         0.5 |    0.024984 |         0.5 |     0.54167 |   1.8477e-05 |     0.059385 |
+|    7 | Accept |         0.5 |    0.021099 |         0.5 |     0.53571 |   1.3288e-05 |      0.31336 |
+|    8 | Accept |         0.5 |    0.021011 |         0.5 |     0.53125 |    0.0050127 |      0.16171 |
+|    9 | Accept |         0.5 |    0.019042 |         0.5 |     0.52778 |     0.042554 |       0.3272 |
+|   10 | Accept |         0.5 |    0.023998 |         0.5 |       0.525 |   1.5349e-06 |      0.42742 |
+|   11 | Accept |         0.5 |    0.021146 |         0.5 |     0.52273 |        50.48 |      0.99561 |
+|   12 | Accept |         0.5 |    0.020801 |         0.5 |     0.52083 |       968.07 |    0.0024135 |
+|   13 | Accept |         0.5 |    0.022003 |         0.5 |     0.49999 |    1.071e-06 |      0.99832 |
+|   14 | Accept |        0.75 |    0.019794 |         0.5 |     0.49994 |   0.00012886 |      0.50177 |
+|   15 | Accept |         0.5 |    0.025784 |         0.5 |     0.49994 |       253.48 |      0.43748 |
+|   16 | Accept |         0.5 |    0.029651 |         0.5 |     0.49995 |     0.013331 |      0.99474 |
+|   17 | Accept |         0.5 |    0.024341 |         0.5 |     0.49995 |       3.6397 |      0.98445 |
+|   18 | Accept |         0.5 |    0.032391 |         0.5 |     0.49996 |      0.83599 |      0.78062 |
+|   19 | Accept |         0.5 |    0.033142 |         0.5 |     0.49996 |      0.28515 |     0.015582 |
+|   20 | Accept |         0.5 |    0.022616 |         0.5 |     0.49996 |    0.0017825 |       0.9894 |
+|=====================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |        Delta |        Gamma |
+|      | result |             | runtime     | (observed)  | (estim.)    |              |              |
+|=====================================================================================================|
+|   21 | Accept |         0.5 |    0.019396 |         0.5 |     0.49997 |       114.95 |     0.061287 |
+|   22 | Accept |         0.5 |    0.020268 |         0.5 |     0.48965 |       1.7663 |     0.030004 |
+|   23 | Accept |         0.5 |    0.019303 |         0.5 |     0.49995 |   8.7359e-06 |      0.60286 |
+|   24 | Accept |         0.5 |    0.024893 |         0.5 |     0.49367 |       523.26 |      0.98578 |
+|   25 | Accept |         0.5 |    0.022011 |         0.5 |     0.49351 |       26.251 |     0.021927 |
+|   26 | Accept |         0.5 |    0.026988 |         0.5 |     0.49349 |        7.023 |     0.022839 |
+|   27 | Accept |         0.5 |    0.019922 |         0.5 |      0.4936 |    0.0028928 |      0.97025 |
+|   28 | Accept |         0.5 |      0.0268 |         0.5 |      0.4936 |      0.15758 |     0.053943 |
+|   29 | Accept |         0.5 |    0.025699 |         0.5 |     0.49367 |     0.023644 |      0.96921 |
+|   30 | Accept |        0.75 |    0.023848 |         0.5 |     0.49035 |   0.00090496 |     0.016125 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 26.599 seconds.
+Total objective function evaluation time: 0.71206
+
+Best observed feasible point:
+     Delta       Gamma 
+    ________    _______
+
+    0.086169    0.84728
+
+Observed objective function value = 0.5
+Estimated objective function value = 0.49035
+Function evaluation time = 0.032425
+
+Best estimated feasible point (according to models):
+      Delta        Gamma 
+    __________    _______
+
+    1.3288e-05    0.31336
+
+Estimated objective function value = 0.849035
+Estimated function evaluation time = 0.022317
+
+
+Mdlmix = 
+
+  ClassificationDiscriminant
+                         ResponseName: 'Y'
+                CategoricalPredictors: []
+                           ClassNames: [0 1]
+                       ScoreTransform: 'none'
+                      NumObservations: 48
+    HyperparameterOptimizationResults: [1×1 BayesianOptimization]
+                          DiscrimType: 'linear'
+                                   Mu: [2×2 double]
+                               Coeffs: [2×2 struct]
+
+
+  Properties, Methods
