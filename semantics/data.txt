@@ -1,0 +1,38 @@
+median, min, max, time points
+Example 5th(inter_ictal)
+Angle 5(inter ictal range larger)
+0	0
+-35191.4866845724	-51113.2000185463
+35191.4866845724	51113.2000185463
+1	1
+55492	55492
+4510	19926
+
+Phase 5(inter ictal range larger, median larger)
+3.25359954221982	2.86809863660330
+0	0
+6.27951171647252	6.25951031074666
+328	176
+1	1
+9	1
+
+Power 5 (Inter ictal range larger, median smaller)
+500511.286326790	560397.224015441
+26.7699145607321	2.64767729617004
+75376713573.3218	19301239700.7515
+14139	14195
+7519	44672
+1501	1
+
+%% mice seizure(5 ictals: start time x1, end time x2)
+ictals = table2array(labels);
+% %%%%%%%
+N = length(EEG);
+T = N/fs; %s
+bin = fs; %samples per bin(1s)
+N_bin = N/bin; % bin number
+idx = 1;%1: generative 
+hop = 64;
+tf_size = 2048;
+win_size = 128; 
+N_win = N/win_size;
